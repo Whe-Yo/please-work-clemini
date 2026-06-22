@@ -1,0 +1,15 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Environment / Credentials
+.env
+*.local.json
+credentials.json
+token.json
+
+# Logs
+*.log
+
+# Cross-agent collaboration scratch (ephemeral)
+agents_chat.md
