@@ -35,7 +35,11 @@ bin/delegate.sh --mode plan "이 코드베이스에서 X 기능의 구현 위치
 
 # 1차 논리 검증/안티테제 위임 (Gemini가 1차 검토자 — Claude가 최종 통합)
 bin/delegate.sh --mode plan "아래 설계의 논리 결함·누락·과도한 가정만 비판해 보고. 칭찬 금지: {설계 내용}"
+
+# 잉여 Gemini 적극 활용: 2패스 자기개선(품질↑) + 압축출력(Claude 읽기↓)
+bin/delegate.sh --mode plan --refine 2 --brief "..."
 ```
+플래그: `--model "<최신 Pro>"`(기본 Gemini 3.1 Pro High) · `--refine N`(1~9 자기개선 패스) · `--brief`(결정가능 압축출력).
 
 > 파일 편집은 agy 헤드리스로 안전히 안 되므로(위 2번 참고) Claude가 직접 하거나 IDE에서 한다. clemini는 **조사·분석·1차 안티테제 위임**에 집중.
 

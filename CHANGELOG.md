@@ -5,6 +5,17 @@
 ## [Unreleased]
 - (다음 변경을 여기에 누적)
 
+## [0.3.0] - 260622
+잉여 Gemini 적극 활용 — 성능↑ · Claude 토큰↓ (연구·실증 반영).
+
+### Added
+- **`--refine N`** (1~9): 다중패스 자기개선 — Gemini가 직전 결과를 비판·개선 N회. Claude는 다듬어진 결과만 검토(교정 사이클↓). 환각루프 방지로 N 캡 + "올바른 부분 보존".
+- **`--brief`**: 결정가능 압축출력(결론 먼저·불릿·서론 금지) → Claude 읽기 토큰↓.
+- 아티팩트 인라인 회수 헬퍼(`_run_agy`) — refine 패스가 실제 본문 위에서 동작.
+### Changed
+- rules/AGENTS.md 독트린: "Gemini 잉여 → 적극 위임(refine·brief·사전압축·앙상블), Claude는 명세·최종판단·시점민감 검증". 스테일 플래그(`-p`/`--approval-mode`) 교정.
+- 권장 기본: 조사·분석 위임 `--refine 2 --brief`.
+
 ## [0.2.2] - 260622
 ### Changed
 - **모델 기본값 = 최신 Gemini Pro**: delegate.sh가 `agy --model "Gemini 3.1 Pro (High)"`로 위임(사용자 지시 — 항상 최신 Pro). `--model`로 override. (`agy models`로 현재 가용 모델 확인.)
