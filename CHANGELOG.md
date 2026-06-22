@@ -5,6 +5,10 @@
 ## [Unreleased]
 - (다음 변경을 여기에 누적)
 
+## [0.2.2] - 260622
+### Changed
+- **모델 기본값 = 최신 Gemini Pro**: delegate.sh가 `agy --model "Gemini 3.1 Pro (High)"`로 위임(사용자 지시 — 항상 최신 Pro). `--model`로 override. (`agy models`로 현재 가용 모델 확인.)
+
 ## [0.2.1] - 260622
 ### Fixed (안전)
 - **agy 샌드박스**: `agy --print`(plan)가 "읽기전용"이 아님을 실증(cwd의 `rule_plan_work.md`를 자기 작업로그로 수정). delegate.sh가 `--dir` 미지정 시 **격리된 임시 디렉토리(mktemp -d)에서 agy 실행** → 실제 레포 파일 오염 차단. README의 "안전" 설명도 정정.

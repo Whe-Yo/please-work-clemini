@@ -14,13 +14,15 @@ set -euo pipefail
 export PATH="$HOME/.local/bin:$PATH"
 MODE="plan"
 DIR=""
+MODEL="Gemini 3.1 Pro (High)"   # 항상 최신 Gemini Pro (사용자 지시). --model로 override.
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --mode) MODE="$2"; shift 2 ;;
-    --dir)  DIR="$2";  shift 2 ;;
-    --*)    echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
-    *)      SPEC="$1"; shift ;;
+    --mode)  MODE="$2";  shift 2 ;;
+    --dir)   DIR="$2";   shift 2 ;;
+    --model) MODEL="$2"; shift 2 ;;
+    --*)     echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
+    *)       SPEC="$1";  shift ;;
   esac
 done
 
@@ -54,7 +56,7 @@ case "$MODE" in
   plan)
     # agy는 복잡 산출물을 stdout이 아니라 아티팩트 .md 파일에 쓰고 포인터만 출력한다.
     # 출력을 캡처해 그대로 보여주고, 아티팩트 경로가 있으면 본문을 회수해 덧붙인다.
-    OUT="$(agy --print "$SPEC")"
+    OUT="$(agy --model "$MODEL" --print "$SPEC")"
     printf '%s\n' "$OUT"
     ART="$(printf '%s' "$OUT" | grep -oE '/[^[:space:])"]*antigravity-cli/brain/[^[:space:])"]*\.md' | head -1)"
     if [[ -n "$ART" && -f "$ART" ]]; then
