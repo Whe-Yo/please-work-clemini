@@ -16,7 +16,7 @@
 
 ### 2. agy CLI 메커니즘 (✅ 동작 검증됨)
 Claude Code가 셸로 `agy --print "<명세>"`를 호출해 Gemini를 헤드리스로 돌리고, 결과를 받아 검증한다. GUI·마우스 없이. (`bin/delegate.sh`가 래핑.)
-- **`plan` (읽기·추론)**: `agy --print` — 권한 자동승인 안 줌 → 위험 도구 막힘(안전). 조사·분석·1차 안티테제에 사용.
+- **`plan` (읽기·추론)**: `agy --print` — 권한 자동승인 안 줌 → 위험 도구 막힘. 조사·분석·1차 안티테제에 사용. **단 `--print`도 cwd에 파일을 쓸 수 있다**(실증: RPW를 수정함) → delegate.sh가 **격리 임시 디렉토리에서 실행**해 실제 파일 오염 차단.
 - **`auto_edit` (파일 편집)**: agy는 안전한 세밀 편집 모드가 없다(유일한 자동승인 `--dangerously-skip-permissions`=전체=yolo). → **agy로는 헤드리스 편집 미지원.** 편집은 IDE에서 직접 하거나 Claude가 한다.
 - **`--dangerously-skip-permissions`(=yolo) 절대 금지** — 승인 게이트를 없애면 폭주(omega 루프)가 돌아온다.
 

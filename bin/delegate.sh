@@ -40,11 +40,17 @@ MSG
   exit 127
 fi
 
-[[ -n "$DIR" ]] && cd "$DIR"
+# agy --print는 "읽기전용"이 아니다 — 실증: cwd의 rule_plan_work.md를 자기 작업로그로 수정함.
+# 따라서 --dir 미지정 시 격리된 임시 디렉토리에서 실행해 실제 파일 오염을 차단한다.
+if [[ -n "$DIR" ]]; then
+  cd "$DIR"
+else
+  _SANDBOX="$(mktemp -d)"; trap 'rm -rf "$_SANDBOX"' EXIT; cd "$_SANDBOX"
+fi
 
 # never yolo — agy의 --dangerously-skip-permissions는 절대 안 쓴다(폭주 방지).
 case "$MODE" in
-  # 읽기·추론. 권한 자동승인 플래그를 주지 않는다 → 위험 도구는 막힘(안전).
+  # 읽기·추론. 위험 도구는 막히나 cwd 파일 쓰기는 가능 → 위 샌드박스로 격리.
   plan)
     # agy는 복잡 산출물을 stdout이 아니라 아티팩트 .md 파일에 쓰고 포인터만 출력한다.
     # 출력을 캡처해 그대로 보여주고, 아티팩트 경로가 있으면 본문을 회수해 덧붙인다.
