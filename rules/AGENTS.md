@@ -2,6 +2,17 @@
 
 Claude(머리)가 Gemini(손)에 `agy` CLI로 작업을 위임할 때의 규칙. **Gemini(Ultra) 토큰은 사실상 잉여, Claude 토큰이 희소 자원. → Gemini를 적극 위임해 ① 성능(품질)↑ ② Claude 토큰↓. 단 호출당 ~25k 오버헤드 → "크게 묶어서".**
 
+## 명명 — Legio Cybernetica (이름일 뿐, 페르소나 아님)
+역할에 워해머40k 메카니쿠스 호칭을 붙인다. **페르소나가 아니라 이름**이다 — 행동은 아래 규율 그대로.
+- **Magos** = Claude(머리): 닫힌 명세 작성·최종 판단·치명적 검증. 코호트에 지령을 내리고 산출을 봉인(Sanction)한다.
+- **Cohort** = Gemini(손): 조사·대량 실행·1차 반론. 단일 위임(`delegate.sh`).
+- **Maniple** = 병렬 팬아웃(`delegate-fanout.sh`): 다수 코호트를 동시에 소집.
+- **Doctrina Imperative** = 닫힌 명세/RPW: 코호트에 적재하는, 종료조건 박힌 지령.
+- **Forge** = `gemini_workspace/`: 코호트가 산출물을 빚는 격리 단조장.
+- **Sanction** = 검토 게이트: Magos가 검증·봉인해야 Forge 밖(본 프로젝트)으로 나간다.
+- **Abominable Intelligence 금단** = never-yolo: 결속(승인 게이트) 없이 코호트를 풀면 폭주(금단의 AI)로 타락한다. 절대 금지.
+- **Datavault** = `log_for_test/`: 마찰·피드백 기록고.
+
 ## 라우팅 — 뭘 누구에게
 
 | 작업 | 담당 | 비고 |
@@ -55,5 +66,11 @@ agy `--print`는 cwd에 파일을 쓴다(실증). 검토 전 산출물이 실제
 - 제미나이의 **1차 검증을 최종으로 채택** — 독립 1차 반론은 좋지만 최종 적부는 Claude가. 치명적·보안 검증은 Claude·결정론적 도구로.
 - 비밀(.env·토큰)을 명세나 결과 로그에 포함.
 
-## 적용 — please-work-claude 위에서
-Claude는 [please-work-claude](https://github.com/Whe-Yo/please-work-claude) 규율(boost·RPW·antithesis) 하에 동작하고, clemini는 그 위의 **위임 층**이다. 안티테제도 "독립 인스턴스" 한 자리를 Gemini가 싸게 채울 수 있다(Claude가 최종 통합).
+## 동반 하네스 & 통합 셋업 (Muster)
+clemini는 단독 하네스가 아니라 **두 동반 하네스 위의 위임 층**이다:
+- [please-work-claude](https://github.com/Whe-Yo/please-work-claude) — **Magos 규율**(boost·RPW·antithesis). Claude(머리)가 따른다.
+- [please-work-gemini](https://github.com/Whe-Yo/please-work-gemini) — **Cohort 규율**. Gemini(손)가 따른다.
+
+**Muster(통합 셋업)**: "please-work-gemini 설치"는 단독이 아니라 셋을 함께 정렬하는 신호다. `bin/muster.sh`가 동반 하네스를 점검하고, **Cohort(gemini) 규율 셋업은 Cohort(Gemini)에게 위임**한다 — Gemini가 셋업 산출물을 **Forge에만** 만들고 **Magos(Claude)가 Sanction(검토)한 뒤 적용**한다. 무검토 반영 0. (Magos만 있고 Cohort가 없는 반쪽 장착 방지.) 상세는 [`SETUP.md`](../SETUP.md).
+- **안전**: agy는 헤드리스 파일편집이 없다(자동승인=yolo뿐 = Abominable Intelligence 금단). 그래서 Cohort 셋업 위임도 **Forge 산출 → Sanction → Magos 적용**만. 시스템 직접 편집 위임은 금지.
+- 안티테제도 "독립 인스턴스" 한 자리를 Cohort가 싸게 채울 수 있다(Magos가 최종 통합).
