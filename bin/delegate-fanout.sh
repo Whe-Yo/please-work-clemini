@@ -12,10 +12,11 @@ PASS=()
 SPECS=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --refine) PASS+=(--refine "$2"); shift 2 ;;
-    --brief)  PASS+=(--brief);       shift ;;
-    --model)  PASS+=(--model "$2");  shift 2 ;;
-    --*)      echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
+    --refine)    PASS+=(--refine "$2"); shift 2 ;;
+    --brief)     PASS+=(--brief);       shift ;;
+    --model)     PASS+=(--model "$2");  shift 2 ;;
+    --workspace) PASS+=(--workspace);   shift ;;
+    --*)         echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
     *)        SPECS+=("$1");         shift ;;
   esac
 done
@@ -36,5 +37,6 @@ i=0
 for s in "${SPECS[@]}"; do
   i=$((i + 1))
   printf '\n===== [파티션 %d] =====\n' "$i"
+  grep -h "\[workspace\]" "$tmp/err_$i" 2>/dev/null || true
   cat "$tmp/out_$i"
 done
