@@ -13,3 +13,7 @@ token.json
 
 # Cross-agent collaboration scratch (ephemeral)
 agents_chat.md
+
+# Gemini 검토대기 산출물 — 본 프로젝트에 커밋 금지(README만 추적)
+gemini_workspace/*
+!gemini_workspace/README.md

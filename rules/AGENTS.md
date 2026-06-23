@@ -30,6 +30,13 @@ Gemini 토큰이 잉여이므로 더 많이 시켜 품질을 올리고 Claude가
 - **반환은 압축**: 항상 `--brief` — Gemini가 요약해 돌려줘야 Claude 통합이 싸다.
 - **병목은 Gemini가 아니라 Claude 통합이다**: Gemini(Ultra·클라우드·로컬RAM 0)는 병렬로 펑펑 돌려도 병목 아님. 단 결과를 Claude가 다 읽으면 Claude가 병목 → `--brief` + 파티션으로 **Claude가 흡수 가능한 양**만. (펑펑 쓰되 출력은 압축·분할.)
 
+### 검토 게이트 — Gemini는 본 프로젝트에 직접 쓰지 않는다
+agy `--print`는 cwd에 파일을 쓴다(실증). 검토 전 산출물이 실제 프로젝트에 새면 안 된다.
+- **파일 산출(프로토타입) 위임 = `--workspace`**: `gemini_workspace/<세션>`(타임스탬프+pid+rand, 병렬에도 유니크)에 **격리·보존**. gitignore됨.
+- **순수 조사(텍스트만) = 기본**(휘발 임시 mktemp). `--dir`(실제 디렉토리)는 쓰기 오염 위험이라 비권장(읽기 분석 한정).
+- **적용은 Claude가 검토 후 수동 복사.** Gemini 산출물을 무검토로 프로젝트·git에 반영 금지.
+- 이름이 `sandbox`가 아니라 `workspace`인 이유: agy가 "아무렇게나 해도 되는 곳"으로 오해하지 않게(안전은 격리+검토가 보장).
+
 ## Always do
 - 위임은 `bin/delegate.sh`(= `agy --model <최신 Pro> --print`)로. 조사·검토는 `--mode plan`(기본). 편집 위임(`auto_edit`)은 agy 미지원.
 - **호출은 묶어서 크게.** agy는 호출당 ~23–25k 토큰 오버헤드 → 작은 위임 여러 번 ❌, 한 번에 충분한 맥락·종료조건 담아 적게 ⭕.

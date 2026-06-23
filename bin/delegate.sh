@@ -17,16 +17,18 @@ DIR=""
 MODEL="Gemini 3.1 Pro (High)"   # 항상 최신 Gemini Pro (사용자 지시). --model로 override.
 REFINE=1                        # 다중패스 자기개선 횟수(성능↑). --refine N (잉여 Gemini 활용).
 BRIEF=""                        # 결정가능 압축출력(Claude 읽기↓). --brief.
+WORKSPACE=""                    # 산출물을 검토용으로 보존(휘발 임시 대신). --workspace
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --mode)   MODE="$2";   shift 2 ;;
-    --dir)    DIR="$2";    shift 2 ;;
-    --model)  MODEL="$2";  shift 2 ;;
-    --refine) REFINE="$2"; shift 2 ;;
-    --brief)  BRIEF=1;     shift ;;
-    --*)      echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
-    *)        SPEC="$1";   shift ;;
+    --mode)      MODE="$2";   shift 2 ;;
+    --dir)       DIR="$2";    shift 2 ;;
+    --model)     MODEL="$2";  shift 2 ;;
+    --refine)    REFINE="$2"; shift 2 ;;
+    --brief)     BRIEF=1;     shift ;;
+    --workspace) WORKSPACE=1; shift ;;
+    --*)         echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
+    *)           SPEC="$1";   shift ;;
   esac
 done
 
@@ -48,9 +50,17 @@ MSG
 fi
 
 # agy --print는 "읽기전용"이 아니다 — 실증: cwd의 rule_plan_work.md를 자기 작업로그로 수정함.
-# 따라서 --dir 미지정 시 격리된 임시 디렉토리에서 실행해 실제 파일 오염을 차단한다.
+# 따라서 Gemini는 본 프로젝트가 아니라 격리 디렉토리에서 돌린다(검토 전 적용 금지).
+#   --dir       : 지정 디렉토리(읽기 분석용 — 쓰기 오염 위험, 비권장)
+#   --workspace : gemini_workspace/<세션>에 보존(프로토타입 산출물 검토용)
+#   기본        : 휘발 임시(mktemp) — 순수 조사(텍스트만)
 if [[ -n "$DIR" ]]; then
   cd "$DIR"
+elif [[ -n "$WORKSPACE" ]]; then
+  WS_ROOT="$(cd "$(dirname "$0")/.." && pwd)/gemini_workspace"
+  SESS="$WS_ROOT/$(date +%y%m%d_%H%M%S)_$$_${RANDOM}"   # 병렬에도 유니크
+  mkdir -p "$SESS"; cd "$SESS"
+  echo "[workspace] $SESS  (검토 후 본 프로젝트에 적용)" >&2
 else
   _SANDBOX="$(mktemp -d)"; trap 'rm -rf "$_SANDBOX"' EXIT; cd "$_SANDBOX"
 fi

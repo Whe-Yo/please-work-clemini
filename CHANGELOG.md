@@ -5,6 +5,15 @@
 ## [Unreleased]
 - (다음 변경을 여기에 누적)
 
+## [0.5.0] - 260623
+검토 게이트 — Gemini 산출물 격리.
+
+### Added
+- **`--workspace`**: 파일 산출(프로토타입) 위임을 `gemini_workspace/<YYMMDD_HHMMSS_pid_rand>`에 **격리·보존**(병렬에도 유니크). 검토 전 본 프로젝트 미적용. gitignore(README만 추적).
+- `gemini_workspace/README.md`: 검토 게이트 흐름·규칙. 이름은 `sandbox` 대신 `workspace`(agy 오해 방지).
+### Notes
+- 기본은 휘발 임시(순수 조사). `--dir`(실제 디렉토리)는 쓰기 오염 위험으로 비권장.
+
 ## [0.4.0] - 260622
 Gemini 유휴 금지 — 병렬·백그라운드 위임.
 
