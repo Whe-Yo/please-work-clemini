@@ -22,6 +22,14 @@ Gemini 토큰이 잉여이므로 더 많이 시켜 품질을 올리고 Claude가
 - **앙상블/병렬**: 중요 사안은 독립 위임 여러 번 → 교차 일치 확인(성능). 함정="자신 있는 오답" 합의 → 시점민감·치명은 Claude·결정론 검증.
 - 권장 기본: 조사·분석 위임은 `--refine 2 --brief`.
 
+### Gemini 유휴 금지 — 병렬·백그라운드 위임
+잉여 Gemini를 놀리지 않는다. **Claude가 작업하는 동안 Gemini는 백그라운드로 조사·프로토·검토를 계속** 돌린다.
+- **백그라운드 위임**: `delegate.sh`를 호출자에서 비차단(run_in_background)으로 띄움 → Claude는 다른 일 하고, 완료 시 결과 회수. (delegate.sh는 동기지만 호출을 async로.)
+- **병렬 팬아웃**: `bin/delegate-fanout.sh "spec1" "spec2" ...` — N개 **파티션된** 명세를 동시에 여러 Gemini 세션으로. 결과를 파티션별로 모아 반환.
+- **파티션 규율**: 각 위임은 **독립·비중복**(같은 연산 두 번 금지). Claude가 겹치지 않게 쪼갠다.
+- **반환은 압축**: 항상 `--brief` — Gemini가 요약해 돌려줘야 Claude 통합이 싸다.
+- **병목은 Gemini가 아니라 Claude 통합이다**: Gemini(Ultra·클라우드·로컬RAM 0)는 병렬로 펑펑 돌려도 병목 아님. 단 결과를 Claude가 다 읽으면 Claude가 병목 → `--brief` + 파티션으로 **Claude가 흡수 가능한 양**만. (펑펑 쓰되 출력은 압축·분할.)
+
 ## Always do
 - 위임은 `bin/delegate.sh`(= `agy --model <최신 Pro> --print`)로. 조사·검토는 `--mode plan`(기본). 편집 위임(`auto_edit`)은 agy 미지원.
 - **호출은 묶어서 크게.** agy는 호출당 ~23–25k 토큰 오버헤드 → 작은 위임 여러 번 ❌, 한 번에 충분한 맥락·종료조건 담아 적게 ⭕.
