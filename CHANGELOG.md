@@ -3,7 +3,13 @@
 이 프로젝트의 주요 변경을 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식, [SemVer](https://semver.org/) 지향. 프로토타입이라 0.x.
 
 ## [Unreleased]
-- (다음 변경을 여기에 누적)
+### Added
+- **능동 피드백 규칙**: `rules/AGENTS.md` Always do에 "clemini 실사용 중 버그·마찰·개선점 발견 시 사용자 지시 없이도 `log_for_test/..._feedback.md`로 즉시 기록" 능동 지침 추가(형식: FEEDBACK_TEMPLATE.md).
+### Fixed
+- **로컬 main upstream 설정**(피드백 260623_1819 FRICTION-1): `git branch --set-upstream-to=origin/main main` — 형제 레포처럼 origin/main 추적, push/`pull --rebase` 정상화.
+- **삭제제한 마운트 index.lock wedge 해소**(피드백 260623_1819 FRICTION-2): 정체 락 제거.
+### Notes
+- claude에 잘못 보관됐던 clemini 피드백(260618_1605)을 이리로 이전 + 항목별 triage·반영표시(close).
 
 ## [0.5.1] - 260623
 ### Added

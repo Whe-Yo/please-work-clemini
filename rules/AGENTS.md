@@ -43,6 +43,7 @@ agy `--print`는 cwd에 파일을 쓴다(실증). 검토 전 산출물이 실제
 - 제미나이 1차 결과(조사·반론)는 **Claude가 통합·최종 판단**한다. 채택은 Claude.
 - 명세엔 종료조건을 박는다: "X 되면 멈춰". 체크리스트로.
 - Claude 토큰은 효율화: 이미 확립된 사실 재도출·장황한 서베이 금지, 추천 1개+근거로.
+- **하네스 피드백(능동)**: clemini(`delegate.sh`·`delegate-fanout.sh`·라우팅·규칙)를 실사용하다 버그·마찰·개선점을 만나면 **사용자 지시를 기다리지 말고** `log_for_test/{YYMMDD_HHMM}_{에이전트}_feedback.md`로 즉시 남긴다(형식: `log_for_test/FEEDBACK_TEMPLATE.md`). 비밀(.env·토큰)·프로젝트 작업 내용은 제외. WHY: 잉여 Gemini 위임 구조는 실사용 마찰을 모아야만 다듬어진다 — 다른 세션이 침묵하면 같은 결함이 반복된다.
 
 ## Ask first
 - `auto_edit`로 파일 수정 위임 전 — 범위(디렉토리·파일) 확인.

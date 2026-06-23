@@ -45,3 +45,10 @@ please-work-claude `260623_1819_claude_feedback.md`의 마운트 이슈가 clemi
 
 ### 권장 대응
 - 상세·권장은 please-work-claude 260623_1819 FRICTION-1 참조. clemini는 셸(delegate.sh) 중심이라 직접 영향은 작지만, Cowork에서 clemini 클론에 feedback 커밋 시 동일 절차 필요.
+
+---
+
+## 반영 (260623)
+
+- **[FRICTION-1] 로컬 main upstream 미설정** → **반영**. `git branch --set-upstream-to=origin/main main` 적용 → 형제 레포처럼 `[origin/main]` 추적(현재 ahead 1, 내용 동기). 셋업류 절차에 upstream 보장 단계 추가는 추후 권장. **종결.**
+- **[FRICTION-2] 삭제제한 마운트 index.lock** → **반영(완화)**. clemini 클론 정체 락 제거 + `feedback` 스킬 6절에 절차 추가(상세는 please-work-claude 260623_1819 반영). **종결.**
