@@ -36,7 +36,11 @@ wait
 i=0
 for s in "${SPECS[@]}"; do
   i=$((i + 1))
-  printf '\n===== [파티션 %d] =====\n' "$i"
+  if grep -q "ESCALATE TO MAGOS" "$tmp/out_$i" 2>/dev/null; then
+    printf '\n===== [파티션 %d — !! ESCALATION: Magos 처리 필요] =====\n' "$i"
+  else
+    printf '\n===== [파티션 %d] =====\n' "$i"
+  fi
   grep -h "\[workspace\]" "$tmp/err_$i" 2>/dev/null || true
   cat "$tmp/out_$i"
 done
