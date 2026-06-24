@@ -8,6 +8,7 @@
 - **Legio Cybernetica 명명**(역할 이름, 페르소나 아님): Magos(Claude)·Cohort/Maniple(Gemini)·Forge(workspace)·Sanction(검토 게이트)·Doctrina Imperative(명세)·Abominable Intelligence 금단(never-yolo)·Datavault(log_for_test). README·AGENTS에 용어집.
 - **동반 하네스 참조 + 통합 셋업(Muster)**: README·AGENTS에 please-work-claude(Magos 규율)·please-work-gemini(Cohort 규율) 동반 명시. `bin/muster.sh` + `SETUP.md` 추가 — "gemini 설치"는 셋을 함께 정렬, gemini 셋업은 Cohort(Gemini)에 위임(Forge 산출) → Magos Sanction 후 적용(무검토 반영 0).
 - **이원 안티테제 명문화**: 논리·인과 검토를 Gemini에만 두지 않고 Claude(독립 인스턴스)가 직접 수행하도록 라우팅·독트린 보강. Gemini=넓은 1차 반론(병렬 swarm) / Claude=논리 깊이·치명 검증. WHY: Gemini는 "자신 있는 오답"을 낸다(실증) — 논리는 머리가 직접.
+- **명명 확장(메카니쿠스 정전)**: `Servitor`(Gemini 대량 노역·기계작업) · `Servo-skull`(스케줄 감시·기록 드론 = 세션 폴링·업데이트 확인) 추가. `Cohort`는 조사·1차 반론으로 재범위.
 ### Fixed
 - **로컬 main upstream 설정**(피드백 260623_1819 FRICTION-1): `git branch --set-upstream-to=origin/main main` — 형제 레포처럼 origin/main 추적, push/`pull --rebase` 정상화.
 - **삭제제한 마운트 index.lock wedge 해소**(피드백 260623_1819 FRICTION-2): 정체 락 제거.
