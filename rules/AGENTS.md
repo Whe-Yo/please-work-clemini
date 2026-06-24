@@ -5,15 +5,12 @@ Claude(머리)가 Gemini(손)에 `agy` CLI로 작업을 위임할 때의 규칙.
 ## 명명 — Legio Cybernetica (이름일 뿐, 페르소나 아님)
 역할에 워해머40k 메카니쿠스 호칭을 붙인다. **페르소나가 아니라 이름**이다 — 행동은 아래 규율 그대로.
 - **Magos** = Claude(머리): 닫힌 명세 작성·최종 판단·치명적 검증. 코호트에 지령을 내리고 산출을 봉인(Sanction)한다.
-- **Cohort** = Gemini(손): 조사·1차 반론(넓이). 단일 위임(`delegate.sh`).
-- **Servitor** = Gemini(손): 대량 실행·기계적 수정·요약 — 단순 노역(rote) 위임. Cohort가 인지·반론이라면 Servitor는 부피·기계작업.
+- **Cohort** = Gemini(손): 조사·1차 반론·대량 실행·기계작업. 단일 위임(`delegate.sh`).
 - **Maniple** = 병렬 팬아웃(`delegate-fanout.sh`): 다수 코호트를 동시에 소집.
-- **Doctrina Imperative** = 닫힌 명세/RPW: 코호트에 적재하는, 종료조건 박힌 지령.
 - **Forge** = `gemini_workspace/`: 코호트가 산출물을 빚는 격리 단조장.
 - **Sanction** = 검토 게이트: Magos가 검증·봉인해야 Forge 밖(본 프로젝트)으로 나간다.
 - **Abominable Intelligence 금단** = never-yolo: 결속(승인 게이트) 없이 코호트를 풀면 폭주(금단의 AI)로 타락한다. 절대 금지.
-- **Servo-skull** = 자율 감시·기록 드론 = 스케줄 작업(세션 폴링 피드백 점검·일일 업데이트 확인). 다른 세션·repo를 관찰해 Datavault에 기록·보고.
-- **Datavault** = `log_for_test/`: 마찰·피드백 기록고.
+- **Servo-skull** = 자율 감시·기록 드론 = 스케줄 작업(세션 폴링 피드백 점검·일일 업데이트 확인). 다른 세션·repo를 관찰해 `log_for_test/`에 기록·보고.
 
 ## 라우팅 — 뭘 누구에게
 

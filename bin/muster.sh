@@ -54,5 +54,5 @@ cat <<'SANCTION'
   2) 위험 단계(시스템 수정·권한·네트워크) 가려내고, 경로·명령을 사실 검증.
   3) 통과한 단계만 Magos가 직접 적용(또는 사용자가 실행). Cohort 산출을 무검토로 반영 금지.
   4) Magos 하네스(claude)는 please-work-claude의 `setup` 스킬로 Claude가 직접 장착(Cohort 위임 아님).
-  5) 마찰·결함은 Datavault(log_for_test/)에 피드백으로 남긴다.
+  5) 마찰·결함은 log_for_test/에 피드백으로 남긴다.
 SANCTION
