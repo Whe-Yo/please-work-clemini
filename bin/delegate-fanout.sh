@@ -4,7 +4,7 @@
 # (run_in_background) Claude가 다른 작업을 하는 동안 N개 Gemini 세션이 병렬로 돈다.
 #
 # 원칙: 각 명세는 독립(중복 연산 금지). 결과는 명세별로 구분해 모아 출력 → Claude가 통합.
-# 사용: delegate-fanout.sh [--refine N] [--brief] [--model M] "spec1" "spec2" ...
+# 사용: delegate-fanout.sh [--refine N] [--brief] [--model M | --deep] "spec1" "spec2" ...
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -15,6 +15,7 @@ while [[ $# -gt 0 ]]; do
     --refine)    PASS+=(--refine "$2"); shift 2 ;;
     --brief)     PASS+=(--brief);       shift ;;
     --model)     PASS+=(--model "$2");  shift 2 ;;
+    --deep)      PASS+=(--deep);        shift ;;
     --workspace) PASS+=(--workspace);   shift ;;
     --*)         echo "알 수 없는 옵션: $1" >&2; exit 2 ;;
     *)        SPECS+=("$1");         shift ;;

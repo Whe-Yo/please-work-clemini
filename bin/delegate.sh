@@ -14,7 +14,7 @@ set -euo pipefail
 export PATH="$HOME/.local/bin:$PATH"
 MODE="plan"
 DIR=""
-MODEL="Gemini 3.1 Pro (High)"   # 항상 최신 Gemini Pro (사용자 지시). --model로 override.
+MODEL="Gemini 3.5 Flash (High)" # 기본 = 최신 세대(에이전트·대량작업 우위·빠르고 쌈). --deep=Opus, --model=임의.
 REFINE=1                        # 다중패스 자기개선 횟수(성능↑). --refine N (잉여 Gemini 활용).
 BRIEF=""                        # 결정가능 압축출력(Claude 읽기↓). --brief.
 WORKSPACE=""                    # 산출물을 검토용으로 보존(휘발 임시 대신). --workspace
@@ -24,6 +24,7 @@ while [[ $# -gt 0 ]]; do
     --mode)      MODE="$2";   shift 2 ;;
     --dir)       DIR="$2";    shift 2 ;;
     --model)     MODEL="$2";  shift 2 ;;
+    --deep)      MODEL="Claude Opus 4.6 (Thinking)"; shift ;;  # 깊은 추론·논리 위임(agy Opus — 호스트 토큰 오프로드)
     --refine)    REFINE="$2"; shift 2 ;;
     --brief)     BRIEF=1;     shift ;;
     --workspace) WORKSPACE=1; shift ;;
@@ -47,6 +48,13 @@ if ! command -v agy >/dev/null 2>&1; then
 설치 후 `agy` 첫 실행 시 구글 로그인(Ultra 계정)으로 인증하세요.
 MSG
   exit 127
+fi
+
+# 모델 검증 게이트 — agy는 잘못된 --model을 거부 없이 Flash로 '침묵 폴백'한다(실증). 미리 차단.
+if ! agy models 2>/dev/null | grep -Fxq "$MODEL"; then
+  echo "거부: '$MODEL'는 agy models에 없는 모델명 — 침묵 폴백(Flash) 방지로 중단." >&2
+  echo "가용 모델:" >&2; agy models 2>/dev/null | sed 's/^/  - /' >&2
+  exit 2
 fi
 
 # agy --print는 "읽기전용"이 아니다 — 실증: cwd의 rule_plan_work.md를 자기 작업로그로 수정함.
