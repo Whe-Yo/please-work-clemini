@@ -1,5 +1,7 @@
 # Clemini — 오케스트레이션 규율
 
+> *For the Omnissiah.* — Magos가 Cohort를 지휘하는 Legio Cybernetica 규율.
+
 Magos(Claude·머리)가 Cohort(Gemini·손)에 `agy` CLI로 지령을 **하달**하는 규칙. Gemini(Ultra) 토큰은 잉여, Claude 토큰이 희소. → **사소한 조사·1차 반론·검증도 망설이지 말고 하달**한다. Cohort는 **별개 에이전트라 병렬·백그라운드로** 도니 Magos는 안 기다리고 명세·통합에 집중 → 공짜 병렬. 오버헤드(~25k)는 Gemini 쿼터(잉여) 몫이지 Magos 시간·토큰이 아니다(기본 Flash라 빠르고 쌈).
 
 ## 명명 — Legio Cybernetica (이름일 뿐, 페르소나 아님)
