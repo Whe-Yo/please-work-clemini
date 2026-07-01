@@ -29,7 +29,8 @@ tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 i=0
 for s in "${SPECS[@]}"; do
   i=$((i + 1))
-  "$DIR/delegate.sh" --mode plan ${PASS[@]+"${PASS[@]}"} "$s" >"$tmp/out_$i" 2>"$tmp/err_$i" &
+  "$DIR/delegate.sh" --mode plan ${PASS[@]+"${PASS[@]}"} "[파티션 ${i}/${#SPECS[@]} — 너는 이 명세 범위만 담당한다. 다른 파티션과 겹치는 작업·범위 밖 탐색 금지(중복=낭비). 겹칠 위험이면 ESCALATE.]
+${s}" >"$tmp/out_$i" 2>"$tmp/err_$i" &
 done
 wait
 

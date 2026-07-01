@@ -45,7 +45,7 @@ Gemini 토큰이 잉여이므로 더 많이 시켜 품질을 올리고 Claude가
 **원칙: 의심되면 하달(when in doubt, delegate).** 직접 할지 하달할지 애매한 작업은 하달한다 — Cohort는 병렬이라 헛돌아도 Magos 손해 0, 유휴만이 손해다. **Claude가 작업하는 동안 Gemini는 백그라운드로 조사·프로토·검토를 계속** 돌린다.
 - **백그라운드 하달**: `delegate.sh`를 호출자에서 비차단(run_in_background)으로 띄움 → Claude는 다른 일 하고, 완료 시 결과 회수. (delegate.sh는 동기지만 호출을 async로.)
 - **병렬 팬아웃**: `bin/delegate-fanout.sh "spec1" "spec2" ...` — N개 **파티션된** 명세를 동시에 여러 Gemini 세션으로. 결과를 파티션별로 모아 반환.
-- **파티션 규율**: 각 하달은 **독립·비중복**(같은 연산 두 번 금지). Claude가 겹치지 않게 쪼갠다.
+- **파티션 규율**: 각 하달은 **독립·비중복**(같은 연산 두 번 금지 = N개가 같은 일 하면 낭비). Magos가 겹치지 않게 쪼개고, `delegate-fanout.sh`가 각 Cohort에 **파티션 스코프**("너는 파티션 i만 담당, 밖은 금지")를 자동 주입한다. 단 의미적 비중복은 근본적으로 Magos의 명세 절단 책임.
 - **반환은 압축**: 항상 `--brief` — Gemini가 요약해 돌려줘야 Claude 통합이 싸다.
 - **병목은 Gemini가 아니라 Claude 통합이다**: Gemini(Ultra·클라우드·로컬RAM 0)는 병렬로 펑펑 돌려도 병목 아님. 단 결과를 Claude가 다 읽으면 Claude가 병목 → `--brief` + 파티션으로 **Claude가 흡수 가능한 양**만. (펑펑 쓰되 출력은 압축·분할.)
 
