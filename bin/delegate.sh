@@ -94,7 +94,7 @@ case "$MODE" in
     # 다중패스 자기개선: 직전 결과를 비판·개선(올바른 부분 보존). 잉여 Gemini로 품질↑.
     # 단 에스컬레이션이 뜨면 패스 중단 — 이슈를 다듬지 않는다.
     i=1
-    while (( i < REFINE )) && ! printf '%s' "$CUR" | grep -q "ESCALATE TO MAGOS"; do
+    while (( i < REFINE )) && ! printf '%s' "$CUR" | grep -q ">>> ESCALATE TO MAGOS"; do
       CUR="$(_run_agy "아래 결과를 비판적으로 검토해 결함·누락·과장·오류만 고치고 더 정확·완결하게 개선한 최종본만 출력. 올바른 부분은 보존(불필요한 재작성 금지). 칭찬·메타설명 금지.${FMT}${ESC}
 
 [직전 결과]
@@ -102,7 +102,7 @@ ${CUR}")"
       ((i++))
     done
     # 에스컬레이션 감지 → 채택 금지 배너로 구분(결과가 아니라 '호출'이다).
-    if printf '%s' "$CUR" | grep -q "ESCALATE TO MAGOS"; then
+    if printf '%s' "$CUR" | grep -q ">>> ESCALATE TO MAGOS"; then
       printf '%s\n' "[[!! ESCALATION — Cohort가 Magos 호출: 결과로 채택하지 말 것. 아래 이슈를 Magos가 해결 후 재위임 !!]]"
     fi
     printf '%s\n' "$CUR"
