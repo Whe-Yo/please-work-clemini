@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.6.2] - 260702
+### Fixed
+- **auto_edit 문서-코드 모순(코호트 감사 260702)**: `rules/AGENTS.md` Ask first의 "auto_edit 하달 전 범위 확인"이 delegate.sh의 무조건 거부(exit 2)와 모순 → 항목 제거(미지원 서술로 일원화).
+
 ## [0.6.1] - 260702
 ### Added
 - **`docs/` 개시 — agy CLI 지식 제텔카스텐**: INDEX(MOC) + 원자 노트 4건(플래그·서브커맨드 인벤토리 실측 v1.0.15 / `--print` 함정 4종 실증 / TUI 세션 관리 웹 / `--sandbox` 미문서화·실증 백로그). 출처 우선순위 명문화: 실측 > 실증 > 웹(공식 cli-using 페이지는 얇음 — 코호트 조사로 확인).
