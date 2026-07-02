@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.6.3] - 260702
+### Fixed
+- **auto_edit 모순 제거 미완(260702 안티테제)**: 0.6.2가 AGENTS.md만 고치고 `rule_plan_work.md` Ask first에 같은 문구가 잔존 — boost가 최우선 로드하는 문서라 노출 빈도가 오히려 큼. 제거 완료(아키텍처 항목으로 대체).
+
 ## [0.6.2] - 260702
 ### Fixed
 - **auto_edit 문서-코드 모순(코호트 감사 260702)**: `rules/AGENTS.md` Ask first의 "auto_edit 하달 전 범위 확인"이 delegate.sh의 무조건 거부(exit 2)와 모순 → 항목 제거(미지원 서술로 일원화).

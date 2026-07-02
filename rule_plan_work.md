@@ -8,7 +8,7 @@
 - 명세에 종료조건 명시
 
 ### Ask first
-- auto_edit 파일 수정 위임 전 범위 확인
+- 하달 범위가 아키텍처에 닿을 때 (auto_edit 항목은 260702 제거 — delegate.sh가 무조건 거부하므로 모순)
 
 ### Never do
 - `agy yolo` (폭주 게이트 제거)
