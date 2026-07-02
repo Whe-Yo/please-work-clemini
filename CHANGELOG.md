@@ -3,6 +3,16 @@
 이 프로젝트의 주요 변경을 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식, [SemVer](https://semver.org/) 지향. 프로토타입이라 0.x.
 
 ## [Unreleased]
+
+## [0.6.0] - 260702
+Legio Cybernetica 명명·에스컬레이션·모델 게이트 + 260702 안티테제 결함 수정.
+
+### Fixed
+- **fanout 침묵 실패 표면화(260702 안티테제)**: 일괄 `wait`가 자식 종료코드를 삼켜 모델 거부·agy 실패 파티션이 "정상 헤더+빈 본문"으로 통과하던 결함 → 파티션별 종료코드 수집, 실패 파티션은 **실패 배너+stderr 전체+채택 금지**, 하나라도 실패면 exit 1(호출자 Magos가 놓치지 못하게). 실패(무효 모델 2파티션)·성공(마이크로 하달 2파티션) 경로 실증.
+- **에스컬레이션 마커 행 시작 앵커(260702)**: 본문 중 인용("...ESCALATE TO MAGOS...")만으로 refine 중단·배너가 뜨던 오탐 → `^>>> ESCALATE TO MAGOS`(행 시작)만 인정. delegate.sh·fanout 일괄.
+- **로컬 main upstream 설정**(피드백 260623_1819 FRICTION-1): `git branch --set-upstream-to=origin/main main` — 형제 레포처럼 origin/main 추적, push/`pull --rebase` 정상화.
+- **삭제제한 마운트 index.lock wedge 해소**(피드백 260623_1819 FRICTION-2): 정체 락 제거.
+
 ### Added
 - **능동 피드백 규칙**: `rules/AGENTS.md` Always do에 "clemini 실사용 중 버그·마찰·개선점 발견 시 사용자 지시 없이도 `log_for_test/..._feedback.md`로 즉시 기록" 능동 지침 추가(형식: FEEDBACK_TEMPLATE.md).
 - **Legio Cybernetica 명명**(역할 이름, 페르소나 아님): Magos(Claude)·Cohort/Maniple(Gemini 단일/병렬)·Servo-skull(스케줄 감시·기록 드론)·Forge(workspace)·Sanction(검토 게이트)·Abominable Intelligence 금단(never-yolo), 우산명 Legio Cybernetica. README·AGENTS 용어집 — 일하는 이름 8개.
@@ -11,12 +21,10 @@
 - **명명 최적화(과명명 트림)**: Servitor·Doctrina Imperative·Datavault는 평범한 용어로 환원(Cohort에 흡수 / 명세·RPW / log_for_test). 행위자·안전 파이프라인 이름만 유지 → 최종 8개.
 - **에스컬레이션 (Cohort→Magos 호출)**: `delegate.sh`·`delegate-fanout.sh`가 모든 위임에 "막히면 `>>> ESCALATE TO MAGOS` 내고 멈춰라"를 자동 주입 + 반환 마커 감지해 채택 금지 배너(팬아웃은 파티션 헤더, refine도 중단). 헤드리스라 실시간 콜백은 없지만 반환값으로 호출 — 강행("자신 있는 오답") 차단.
 ### Changed
+- **README 전면 재작성(260702)**: 스타일 통일 — `[ 제목 ]` 섹션, 담백한 서술, 한국어 본문 + 영어 미러. 내용 최신화 — 기본 모델 3.5 Flash(구 "3.1 Pro" 서술 스테일 정정), fanout·escalation·`--deep`·하달 용어 반영.
 - **기본 위임 모델 = 최신 세대 `Gemini 3.5 Flash (High)`** (구 `3.1 Pro`에서 변경): 에이전트·도구·대량작업에서 3.1 Pro를 앞서고(벤치) ~3.6배 빠르고 쌈. `delegate.sh:17`. 어려운 순수 추론은 `--model "Gemini 3.1 Pro (High)"`로.
 - **agy Opus 활용 — `--deep`**: `Claude Opus 4.6 (Thinking)` 위임(깊은 추론·논리를 헤드리스 Opus로 → 호스트 Claude 토큰 오프로드). `delegate-fanout.sh`도 패스스루.
 - **모델 검증 게이트**(안티테제 발견): agy `--print`가 잘못된 `--model`을 거부 없이 Flash로 '침묵 폴백'함 → `delegate.sh`가 `agy models` 대조로 무효 모델명 사전 거부. "Pro로 믿지만 실제 Flash" 침묵 강등 차단.
-### Fixed
-- **로컬 main upstream 설정**(피드백 260623_1819 FRICTION-1): `git branch --set-upstream-to=origin/main main` — 형제 레포처럼 origin/main 추적, push/`pull --rebase` 정상화.
-- **삭제제한 마운트 index.lock wedge 해소**(피드백 260623_1819 FRICTION-2): 정체 락 제거.
 ### Notes
 - claude에 잘못 보관됐던 clemini 피드백(260618_1605)을 이리로 이전 + 항목별 triage·반영표시(close).
 
